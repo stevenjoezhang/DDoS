@@ -33,7 +33,7 @@ def spider_kuaidaili(index):
         urls = []
         page = opener.open(url % index).read()
         page = BeautifulSoup(page)
-        proxys = page.tbody.findAll('tr')
+        proxys = page.findAll('tbody')[2].findAll('tr')
         for p in proxys:
             td = p.findAll('td')
             host, port = td[0].string, td[1].string
