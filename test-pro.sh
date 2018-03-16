@@ -8,4 +8,4 @@ done
 
 sleep 30
 
-kill `pgrep python`
+pgrep python|xargs kill
