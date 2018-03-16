@@ -21,11 +21,19 @@
 
 ## 使用方法
 
+### 1)获取最新代理服务器：
+
+```
+python proxy.py
+```
+
+### 2)开始攻击
+
 对ddos.py: `python ddos.py http://www.xxx.com/ [safe]`，safe是可选项，加上之后会保证服务器挂掉之后停止攻击
 
-对proxy-py：`python proxy-ddos.py http://www.xxx.com`，攻击不会停止
+对proxy-ddos.py：`python proxy-ddos.py http://www.xxx.com`，攻击不会停止
 
-想要停止攻击: 
+### 3)想要停止攻击: 
 
 ```
 pgrep python|xargs kill
@@ -33,4 +41,4 @@ pgrep python|xargs kill
 
 代理服务器需要更新，直接修改proxy.py文件findIP()中的i循环大小就可以了。也要随时注意代理网站随时会被查封
 
-*****供学习使用，造成的结果作者概不负责*****
+**供学习使用，造成的结果作者概不负责**
