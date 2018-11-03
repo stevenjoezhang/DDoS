@@ -2,36 +2,34 @@
 
 ## 思路
 
-主要解决了两个问题
-* 单个主机发起攻击链接数量问题。这里使用多线程，只请求数据，不接收数据，写上足够多的headder以满足各种可能的优势。请求数据的时候尽可能的去寻找页面内容含量最多的网页。
+主要解决了两个问题：
+* 单个主机发起攻击链接数量问题。这里使用多线程，只请求数据，不接收数据，写上足够多的header以满足各种可能的优势。请求数据的时候尽可能的去寻找页面内容含量最多的网页。
 
 * 没有肉鸡怎么办？IP被封号怎么办？所以使用了代理服务器，怎么都封不过来。
 
 ## 文件说明
 
 ```
+├── get-proxy.py 获取代理服务器（快代理）
+├── get-proxy-2.py 获取代理服务器（西刺免费代理IP）
+├── result.txt 保存代理服务器信息（执行前两个脚本后，产生的中间文件）
 ├── ddos.py 单个IP攻击，常用于内网
-├── list.txt 产生代理服务器的中间文件
-├── proxy-ddos.py 
-├── proxy.py 利用代理服务器攻击，常用于外网
-├── README.md
-├── result.txt 代理服务器列表
-└── test-pro.sh linux测试脚本
+├── ddos-proxy.py 利用代理服务器攻击，常用于外网
+├── test-pro.sh linux测试脚本
+└── README.md
 ```
 
 ## 使用方法
 
 ### 1)获取最新代理服务器：
 
-```
-python proxy.py
-```
+执行`python get-proxy.py`或者`python get-proxy-2.py`。
 
 ### 2)开始攻击
 
-对ddos.py: `python ddos.py http://www.xxx.com/ [safe]`，safe是可选项，加上之后会保证服务器挂掉之后停止攻击
+对ddos.py，执行`python ddos.py http://www.xxx.com/ [safe]`。其中safe是可选项，加上之后会保证服务器挂掉之后停止攻击。
 
-对proxy-ddos.py：`python proxy-ddos.py http://www.xxx.com`，攻击不会停止
+对ddos-proxy.py，执行`python proxy-ddos.py http://www.xxx.com`，攻击不会停止。
 
 ### 3)想要停止攻击: 
 
@@ -39,6 +37,6 @@ python proxy.py
 pgrep python|xargs kill
 ```
 
-代理服务器需要更新，直接修改proxy.py文件findIP()中的i循环大小就可以了。也要随时注意代理网站随时会被查封
+代理服务器需要更新，直接修改`get-proxy.py`文件中findIP()中的i循环大小就可以了。也要随时注意代理网站随时会被查封。
 
-**供学习使用，造成的结果作者概不负责**
+**仅供学习使用，造成的后果作者概不负责**
