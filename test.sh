@@ -2,7 +2,7 @@
 
 for i in {1..5};
 do
-    python ddos-proxy.py http:// &
+    python ddos-proxy.py http://www.baidu.com &
     echo $i
 done
 

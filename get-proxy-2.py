@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import urllib2
-import urllib
 import re
 import socket
 import random
+import sys
 from BeautifulSoup import BeautifulSoup
 socket.setdefaulttimeout(2)
-import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -33,15 +32,14 @@ def spider_xicidaili(index):
         urls = []
         page = opener.open(url % index).read()
         page = BeautifulSoup(page)
-        #print page
         proxys = page.table.findAll('tr')
         for p in proxys:
             if p.findAll('th'):
                 continue;
             else:
                 td = p.findAll('td')
-            #print td;
             host, port = td[1].string, td[2].string
+            print host, port
             urls.append('http://%s:%s/' % (host, port))
         return urls
     except Exception, e:

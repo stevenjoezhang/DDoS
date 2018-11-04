@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import urllib2
-import urllib
 import re
 import socket
 import random
+import time
+import sys
 from BeautifulSoup import BeautifulSoup
 socket.setdefaulttimeout(2)
-import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -22,6 +22,7 @@ def findProxy():
     for i in range(1, 10):
         tmp = spider_kuaidaili(i)
         proxys += tmp
+        time.sleep(1)
     writeFile(proxys)
     print '共找到%s个代理' % len(proxys)
 
@@ -37,6 +38,7 @@ def spider_kuaidaili(index):
         for p in proxys:
             td = p.findAll('td')
             host, port = td[0].string, td[1].string
+            print host, port
             urls.append('http://%s:%s/' % (host, port))
         return urls
     except Exception, e:
