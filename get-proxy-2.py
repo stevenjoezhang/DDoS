@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 import urllib2
 import re
-import socket
 import random
-import sys
 from BeautifulSoup import BeautifulSoup
+import socket
 socket.setdefaulttimeout(2)
+import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -66,6 +66,6 @@ def testIP(url):
 def test_spider_xicidaili():
     spider_xicidaili(1)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     #test_spider_xicidaili()
     findProxy()

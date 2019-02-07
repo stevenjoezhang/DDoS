@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import urllib2
-import threading
-import random
 import re
+import random
 import sys
+import threading
 import socket
 socket.setdefaulttimeout(2)
 # global params
