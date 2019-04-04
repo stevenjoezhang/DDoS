@@ -25,13 +25,13 @@
 
 ### 获取最新代理服务器：
 
-执行`python get-proxy.py`或者`python get-proxy-2.py`。
+执行`python3 get-proxy.py`或者`python3 get-proxy-2.py`。
 
 ### 开始攻击
 
-对ddos.py，执行`python ddos.py http://www.xxx.com/ [safe]`。其中safe是可选项，加上之后会保证服务器挂掉之后停止攻击。
+对ddos.py，执行`python3 ddos.py http://www.xxx.com/ [safe]`。其中safe是可选项，加上之后会保证服务器挂掉之后停止攻击。
 
-对ddos-proxy.py，执行`python ddos-proxy.py http://www.xxx.com/`，攻击不会停止。
+对ddos-proxy.py，执行`python3 ddos-proxy.py http://www.xxx.com/`，攻击不会停止。
 
 请注意，目前只支持`http`协议，使用`https`会产生错误。
 
